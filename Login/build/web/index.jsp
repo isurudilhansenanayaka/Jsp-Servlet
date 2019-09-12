@@ -18,8 +18,8 @@
         <form action="Controller" method="POST">
             <table align="center">
                 <tr>
-                    <th align="right">Email: </th>
-                    <td><input type="email" name="email" placeholder="Enter valid Email" required=""></td>
+                    <th align="right">User Name: </th>
+                    <td><input type="text" name="userName" placeholder="Enter valid userName" required=""></td>
                 </tr>
                 <tr>
                     <th align="right">Password: </th>

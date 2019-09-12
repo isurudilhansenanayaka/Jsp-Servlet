@@ -14,9 +14,9 @@
     </head>
     <body>
         <% 
-        String firstName=request.getParameter("t1");
-        String lastName=request.getParameter("t2");
-        
+        String userName=request.getParameter("userName");
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
         Connection conn=null;
         Statement st=null;
         
@@ -24,7 +24,7 @@
             Class.forName("com.mysql.jdbc.Driver");
             conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp","root","");
             st=conn.createStatement();
-            String qry="INSERT INTO `user`(`firstName`,`lastName` `password`) VALUES ('"+firstName+"','"+lastName+"')";
+            String qry="INSERT INTO `user` (`userName`, `email`, `password`) VALUES ('"+userName+"', '"+email+"', '"+password+"')";
             st.executeUpdate(qry);
             out.print("Success Regitration");
         }
