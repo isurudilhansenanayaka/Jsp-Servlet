@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "logout", urlPatterns = {"/logout"})
 public class logout extends HttpServlet {
-
+    HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,9 +34,14 @@ public class logout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             System.out.println("rygthytfuhyfujy");
-            HttpSession session=request.getSession();  
-            session.invalidate();
-            response.sendRedirect("index.jsp");
+              
+            if(session==null){
+                         session = request.getSession(true);
+                    }
+            session.invalidate();  
+             
+             
+            response.sendRedirect("signup.jsp");
     }
 
     

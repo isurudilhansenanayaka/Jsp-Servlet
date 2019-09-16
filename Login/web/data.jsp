@@ -4,6 +4,7 @@
     Author     : isuru_s
 --%>
 
+<%@page import="service.hash"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*" %>
 <!DOCTYPE html>
@@ -18,15 +19,18 @@
         String email=request.getParameter("email");
         String password=request.getParameter("password");
         Connection conn=null;
+        
         Statement st=null;
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp","root","");
             st=conn.createStatement();
-            String qry="INSERT INTO `user` (`userName`, `email`, `password`) VALUES ('"+userName+"', '"+email+"', '"+password+"')";
+            String hashpw=hash.encryptThisString(password);
+            String qry="INSERT INTO `user` (`userName`, `email`, `password`) VALUES ('"+userName+"', '"+email+"', '"+hashpw+"')";
             st.executeUpdate(qry);
             out.print("Success Regitration");
+            response.sendRedirect("welcome.jsp");
         }
             
         catch(Exception ex){

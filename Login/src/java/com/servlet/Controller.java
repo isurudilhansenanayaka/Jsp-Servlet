@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.hash;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Controller extends HttpServlet {
     Connection conn=null;
         Statement st=null;
         ResultSet rs;
+        HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,41 +50,6 @@ public class Controller extends HttpServlet {
         }
     }
         
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException, SQLException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            
-//            String _userName=request.getParameter("userName");
-//            String _password=request.getParameter("password");
-//            String sql = "SELECT password FROM user WHERE userName = 'isuru'";
-//      ResultSet rs = st.executeQuery(sql);
-//      //STEP 5: Extract data from result set
-//      while(rs.next()){
-//         //Retrieve by column name
-//         String id  = rs.getString("password");
-//         
-//
-//         //Display values
-//         System.out.print("ID: " + id);
-//         
-//      }
-////            try{
-////                if(_userName!=null){
-////                    if(_userName.equals("abc@gmail.com") && _password.equals("123")){
-////                        response.sendRedirect("welcome.jsp");
-////                    }
-////                    else{
-////                     out.println("Login Failed  ");
-////                }
-////                }
-////                
-////            }
-////            catch(Exception ex){
-////                out.println("Error :"+ex.getMessage());
-////            }
-//        }
-//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -102,10 +69,10 @@ public class Controller extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String _userName=request.getParameter("userName");
+            String _userName=request.getParameter("userName");
             String _password=request.getParameter("password");
             String sql = "SELECT password FROM user WHERE userName = '"+_userName+"'";
-      
+            String hashpw=hash.encryptThisString(_password);
         try {
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
@@ -120,8 +87,11 @@ public class Controller extends HttpServlet {
                 
                 //Display values
                 System.out.print("ID: " + id);
-                if(id.equals(_password)){
-                     HttpSession session = request.getSession(true);
+                if(id.equals(hashpw)){
+                    if(session==null){
+                         session = request.getSession(true);
+                    }
+                    
                      session.setAttribute("username1",_userName );
                      
                     response.sendRedirect("welcome.jsp");
