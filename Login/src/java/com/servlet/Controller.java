@@ -26,10 +26,12 @@ import service.hash;
  * @author isuru_s
  */
 public class Controller extends HttpServlet {
-    Connection conn=null;
-        Statement st=null;
-        ResultSet rs;
-        HttpSession session;
+
+    Connection conn = null;
+    Statement st = null;
+    ResultSet rs, rs1;
+    HttpSession session;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,17 +41,16 @@ public class Controller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-        private void db() throws SQLException{
+    private void db() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp","root","");
-            st=(Statement) conn.createStatement();
-            
+            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
+            st = (Statement) conn.createStatement();
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -60,51 +61,52 @@ public class Controller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         try {
             this.db();
-        } catch (SQLException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            String _userName=request.getParameter("userName");
-            String _password=request.getParameter("password");
-            String sql = "SELECT password FROM user WHERE userName = '"+_userName+"'";
-            String hashpw=hash.encryptThisString(_password);
-        try {
+
+            String _userName = request.getParameter("userName");
+            String _password = request.getParameter("password");
+            
+            String sql = "SELECT password FROM user WHERE userName = '" + _userName + "'";
+//        String ad = "SELECT password FROM user WHERE role LIKE 'admin%'";
+            String hashpw = hash.encryptThisString(_password);
             rs = st.executeQuery(sql);
+//            rs1 = st.executeQuery(ad);
+            //STEP 5: Extract data from result set
+            if (rs != null) {
+                while (rs.next()) {
+                    //Retrieve by column name
+                    String id = rs.getString("password");
+
+                    //Display values
+                    System.out.print("ID: " + id);
+                    if (id.equals(hashpw)) {
+
+                        session = request.getSession();
+                        session.setMaxInactiveInterval(300);
+
+                        session.setAttribute("username1", _userName);
+                        
+                        session.setAttribute("password1", _password);
+                        response.sendRedirect("welcome.jsp");
+
+                    } else {
+                        out.print("Sorry, username or password error!");
+                        response.sendRedirect("index.jsp");
+
+                    }
+                }
+            } else {
+                out.print("Sorry, username or password error!");
+                response.sendRedirect("index.jsp");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            //STEP 5: Extract data from result set
-            while(rs.next()){
-                //Retrieve by column name
-                String id  = rs.getString("password");
-                
-                
-                //Display values
-                System.out.print("ID: " + id);
-                if(id.equals(hashpw)){
-                    if(session==null){
-                         session = request.getSession(true);
-                    }
-                    
-                     session.setAttribute("username1",_userName );
-                     
-                    response.sendRedirect("welcome.jsp");
-                 
-                }
-                else{
-                   response.sendRedirect("index.jsp"); 
-                }
-                        }   } catch (SQLException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-    
-
-}
+    }
 }

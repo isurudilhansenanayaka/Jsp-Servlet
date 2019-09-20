@@ -34,14 +34,22 @@ public class logout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             System.out.println("rygthytfuhyfujy");
-              
-            if(session==null){
-                         session = request.getSession(true);
-                    }
+            PrintWriter out = response.getWriter();
+            
+                         session = request.getSession();
+                    
             session.invalidate();  
              
-             
-            response.sendRedirect("signup.jsp");
+            
+            response.sendRedirect("index.jsp");
+//                PrintWriter out = response.getWriter();
+//		out.println("thanq you!!, Your session was destroyed successfully!!");
+//		session = request.getSession(false);
+//                
+//		// session.setAttribute("user", null);
+//		session.removeAttribute("userr");
+//		//session.getMaxInactiveInterval();
+//                response.sendRedirect("index.jsp");
     }
 
     

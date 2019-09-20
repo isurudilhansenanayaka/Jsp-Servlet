@@ -4,9 +4,33 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>com.servlet.Controller</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>retrieve</servlet-name>
+        <servlet-class>com.servlet.retrieve</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>update</servlet-name>
+        <servlet-class>com.servlet.update</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>com.servlet.delete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>retrieve</servlet-name>
+        <url-pattern>/retrieve</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
