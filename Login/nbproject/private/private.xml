@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/web/welcome.jsp</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/service/UserDao.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/retrieve.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/service/User.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/update.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/welcome.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/DBconnection.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/Controller.java</file>
+        </group>
     </open-files>
 </project-private>

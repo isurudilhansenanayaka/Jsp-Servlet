@@ -19,6 +19,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.User;
+import service.hash;
 
 /**
  *
@@ -38,36 +40,17 @@ public class update extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException {
+        throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("id");
-        String userName = request.getParameter("userName");
-    String password = request.getParameter("password");
-        if(id != null)
-{
-Connection con = null;
-PreparedStatement ps = null;
-int personID = Integer.parseInt(id);
-try
-{
-Class.forName("com.mysql.jdbc.Driver");
-java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
-String sql="Update user set id=?,userName=?,password=? where id="+id;
-ps = con.prepareStatement(sql);
-ps.setString(1,id);
-ps.setString(2, userName);
-ps.setString(3, password);
-
-int i = ps.executeUpdate();
-
+//        User user=new User();
+//        Integer id=user.getId();
+//        String userName = user.getUserName();
+//    String email= user.getEmail();
+//    String password = user.getPassword();
+   
+     
 }
-catch(SQLException sql)
-{
-request.setAttribute("error", sql);
-
-}
-}
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -99,22 +82,46 @@ request.setAttribute("error", sql);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//         try {
+//             processRequest(request, response);
+//         } catch (ClassNotFoundException ex) {
+//             Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
+//         }
+//         try {
+//             conn=(Connection) DBconnection.getConnection();
+//             String _userName = request.getParameter("userName");
+//            String sql = "SELECT * FROM user";
+//            rs=st.executeQuery(sql);
+//         } catch (ClassNotFoundException ex) {
+//             Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
+//         } catch (SQLException ex) {
+//             Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
+//         }
+             Connection conn = null;
+    Statement st = null;
+    ResultSet rs = null;
          try {
-             processRequest(request, response);
+             conn=(Connection) DBconnection.getConnection();
          } catch (ClassNotFoundException ex) {
              Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
          }
-         try {
-             conn=(Connection) connection.db();
-             String _userName = request.getParameter("userName");
-            String sql = "SELECT * FROM user";
-            rs=st.executeQuery(sql);
-         } catch (ClassNotFoundException ex) {
-             Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (SQLException ex) {
-             Logger.getLogger(update.class.getName()).log(Level.SEVERE, null, ex);
-         }
-            
+////    User user=new User();
+//        String userName = user.getUserName();
+//    String email= user.getEmail();
+//    String password = user.getPassword();
+//    try{
+//    st=(Statement) conn.createStatement();
+//    String sql ="SELECT * FROM user WHERE userName=userName";
+//    
+//    rs = st.executeQuery(sql);
+//    
+//    
+//while(rs.next()){
+//    conn.close();
+//}
+//} catch (Exception e) {
+//e.printStackTrace();
+//}
     }
 
     

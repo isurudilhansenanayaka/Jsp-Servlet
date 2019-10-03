@@ -16,6 +16,10 @@
         <servlet-name>delete</servlet-name>
         <servlet-class>com.servlet.delete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>signup</servlet-name>
+        <servlet-class>com.servlet.signup</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>delete</servlet-name>
         <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signup</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

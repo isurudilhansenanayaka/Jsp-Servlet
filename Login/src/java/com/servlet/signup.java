@@ -1,27 +1,28 @@
-package com.servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.servlet;
 
 import com.mysql.jdbc.Statement;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.hash;
 
 /**
  *
  * @author isuru_s
  */
-public class delete extends HttpServlet {
+@WebServlet(name = "signup", urlPatterns = {"/signup"})
+public class signup extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,23 +34,11 @@ public class delete extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {  
-            response.setContentType("text/html;charset=UTF-8");
-            String id=request.getParameter("id");
-            try
-            {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
-            Statement st= (Statement) conn.createStatement();
-            int i=st.executeUpdate("DELETE FROM user WHERE id="+id);
-            out.println("Data Deleted Successfully!");
-            }
-            catch(Exception e)
-            {
-            System.out.print(e);
-            e.printStackTrace();
-            }
-        }
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+       
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -63,7 +52,36 @@ public class delete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        
+        String userName=request.getParameter("userName");
+       
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
+        String passwordc=request.getParameter("passwordc");
+        Connection conn=null;
+        
+        Statement st=null;
+        
+        try{
+            conn=DBconnection.getConnection();
+            st=(Statement) conn.createStatement();
+                if(!passwordc.equals(password)){
+                   request.setAttribute("msg","Passwords mismatched");
+                   RequestDispatcher rd = request.getRequestDispatcher("signup.jsp"); //return the jsp
+                   rd.forward(request, response);
+                }else{
+                String hashpw=hash.encryptThisString(password);
+                String qry="INSERT INTO `user` (`userName`, `email`, `password`) VALUES ('"+userName+"', '"+email+"', '"+hashpw+"')";
+                st.executeUpdate(qry);
+                out.print("Success Regitration");
+                response.sendRedirect("index.jsp");
+                    }
+        }
+            
+        catch(Exception ex){
+            out.print(ex.getMessage());
+        }
     }
 
     /**
@@ -77,9 +95,7 @@ public class delete extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        String id=request.getParameter("id");
-
+        
     }
 
     /**

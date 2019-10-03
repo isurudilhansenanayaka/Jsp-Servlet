@@ -4,7 +4,9 @@
     Author     : isuru_s
 --%>
 
-<%@page import="com.servlet.connection"%>
+<%@page import="service.User"%>
+<%@page import="service.UserDao"%>
+<%@page import="com.servlet.DBconnection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="com.mysql.jdbc.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -12,24 +14,24 @@
 <!DOCTYPE html>
 
 <%
-   
+    String sid=request.getParameter("id");  
+        int id=Integer.parseInt(sid);  
+   User e=UserDao.getEmployeeById(id);
     Connection conn = null;
     Statement st = null;
     ResultSet rs = null;
-    conn=(Connection) connection.db();
+    conn=(Connection) DBconnection.getConnection();
     String userName = request.getParameter("userName");
-    String password = request.getParameter("password");
+//    String id = request.getParameter("id");
     try{
     st=(Statement) conn.createStatement();
-    String sql ="SELECT * FROM user WHERE userName=userName";
-    
+    String sql ="SELECT * FROM user WHERE userName=userName";   
     rs = st.executeQuery(sql);
-    
-    
+        
 while(rs.next()){
     
 %>
-s
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,24 +40,24 @@ s
         <title>update Page</title>
     </head>
     <body>
-        <script>
-            function reload(){
-                Location.reload();
-            }
-        </script>
+        
         <div class="container">
           
             <div class="row">
-    <div class="col">
-      1 of 3
-    </div>
+    
     <div class="col-5">
-      <form class="form"  action="update" name="update">
-                
+      <form class="form" method="post" action="update" name="update">
+                <div class="form-group">
+                    <label for="id" class="col-sm-3 control-label">User Id</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="id" placeholder="id" class="form-control" 
+                               autofocus name= "id" required="" value="">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 control-label">User Name</label>
                     <div class="col-sm-9">
-                        <input type="text" id="userName" placeholder="User Name" class="form-control" 
+                        <input type="text" id="id" placeholder="User Name" class="form-control" 
                                autofocus name= "userName" required="" value="<%= rs.getString("userName")  %>">
                     </div>
                 </div>
@@ -67,20 +69,7 @@ s
                                value="<%= rs.getString("email")  %>">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Password*</label>
-                    <div class="col-sm-9">
-                        <input type="password" id="password" placeholder="Password" class="form-control" name= "password" required=""
-                               value="<%= rs.getString("Password")  %>" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Re-Password*</label>
-                    <div class="col-sm-9">
-                        <input type="password" id="password" placeholder="Password" class="form-control" name= "passwordc" required="" accept=""
-                               value="<%= rs.getString("Password")  %>">
-                    </div>
-                </div>
+                
                
                 
                 <div class="form-group">
@@ -91,22 +80,20 @@ s
                  <p account></p> 
                 
                 <div class="container signin">
-                    <button colspan="2" align="right" type="submit" onclick="reload()" class="btn btn-success">Update</button>
+                    <button colspan="2" align="right" type="submit"  class="btn btn-success">Update</button>
                 
                 </div>
             </form> <!-- /form -->
     </div>
-    <div class="col">
-      3 of 3
-    </div>
+   
   </div>
         </div>
     <%
 
 conn.close();
 }
-} catch (Exception e) {
-e.printStackTrace();
+} catch (Exception ex) {
+ex.printStackTrace();
 }
 %>
 </body>

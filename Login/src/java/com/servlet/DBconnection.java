@@ -16,8 +16,8 @@ import java.util.logging.Logger;
  *
  * @author isuru_s
  */
-public class connection {
-    public static Connection db() throws ClassNotFoundException{
+public class DBconnection {
+    public static Connection getConnection() throws ClassNotFoundException{
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn;
         try {
@@ -26,7 +26,7 @@ public class connection {
             return conn;
             
         } catch (SQLException ex) {
-            Logger.getLogger(connection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         

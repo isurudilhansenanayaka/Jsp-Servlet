@@ -8,6 +8,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -21,7 +22,7 @@
     
          <form class="form" role="form" action="logout"  method="POST">
              
-             <h1 class="text-success" align="right">Hello!  *<%= session.getAttribute("username1")  %>* Successful Login!</h1>
+             <h1 class="text-success" align="right">Hello!  <%= session.getAttribute("username1")  %> Successful Login!</h1>
              <button colspan="2" align="right" type="submit" align="right" >Logout</button>
              
             </form>
@@ -46,33 +47,52 @@
     <th>User id</th>
     <th>User Name</th>
     <th>Email</th>
-    <th>Edit</th>
-    <th>Delete</th>
+    
   </tr>
   
-      <% 
-      try{
-          Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
-            Statement st = (Statement) conn.createStatement();
-            String sql = "SELECT * FROM user";
-            ResultSet rs=st.executeQuery(sql);
-            while(rs.next()){
-                %>
+     <c:forEach var="user" items="${AllUsers}">
                 <tr>
-                <td><%=rs.getInt("id") %> </td>
-                <td><%=rs.getString("userName")%> </td>
-                <td> <%=rs.getString("email")%></td> 
-                <td><a href="update.jsp?id=<%=rs.getString("id")%>">update</a></td>
-                <td><a href="delete?id=<%=rs.getString("id") %>"><button type="button" class="delete">Delete</button></a></td>
+                    <td><c:out value="${user.id}" /></td>
+                    <td><c:out value="${user.userName}" /></td>
+                    <td><c:out value="${user.email}" /></td>
+                    
+                    
                 </tr>
-              <%
-                 
-            }
-      }
-      catch(Exception ex){
-         ex.printStackTrace();
-      }
-      %>
-  
+    </c:forEach>
+          <nav aria-label="Navigation for countries">
+                <ul class="pagination">
+                    
+                    <!-- previous tab -->
+                    <!-- if currentPagteNumber is not equal to 1, we need to go to the previous pages  -->
+                    <c:if test="${currentPageNumber != 1}">
+                        <li class="page-item"><a class="page-link" 
+                            href="retrieve?numberOfRows=${numberOfRows}&currentPageNumber=${currentPageNumber-1}">Previous</a>
+                        </li>
+                    </c:if>
+                    
+                   <!-- numbered tabs -->
+                   <!-- run a foreach loop begins with 1 to numberOfPages -->
+                    <c:forEach begin="1" end="${numberOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${currentPageNumber eq i}">
+                                <li class="page-item active"><a class="page-link">
+                                        ${i} <span class="sr-only">(current)</span></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link" 
+                                    href="retrieve?numberOfRows=${numberOfRows}&currentPageNumber=${i}">${i}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    
+                    <!-- next tab -->            
+                    <c:if test="${currentPageNumber < numberOfPages}">
+                        <li class="page-item"><a class="page-link" 
+                            href="retrieve?numberOfRows=${numberOfRows}&currentPageNumber=${currentPageNumber+1}">Next</a>
+                        </li>
+                    </c:if>              
+                </ul>
+            </nav>      
 </table>

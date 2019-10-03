@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.hash;
+import com.servlet.DBconnection;
+import static com.servlet.DBconnection.getConnection;
 
 /**
  *
@@ -31,7 +33,7 @@ public class Controller extends HttpServlet {
     Statement st = null;
     ResultSet rs, rs1;
     HttpSession session;
-
+    DBconnection c=null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,16 +43,16 @@ public class Controller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private void db() throws SQLException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
-            st = (Statement) conn.createStatement();
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    private void db() throws SQLException {
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/userjsp", "root", "");
+//            st = (Statement) conn.createStatement();
+//
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -66,16 +68,16 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            this.db();
-
+            
             String _userName = request.getParameter("userName");
             String _password = request.getParameter("password");
-            
+            conn=(Connection) getConnection();
             String sql = "SELECT password FROM user WHERE userName = '" + _userName + "'";
-//        String ad = "SELECT password FROM user WHERE role LIKE 'admin%'";
+
             String hashpw = hash.encryptThisString(_password);
+            st = (Statement) conn.createStatement();
             rs = st.executeQuery(sql);
-//            rs1 = st.executeQuery(ad);
+
             //STEP 5: Extract data from result set
             if (rs != null) {
                 while (rs.next()) {
@@ -92,7 +94,7 @@ public class Controller extends HttpServlet {
                         session.setAttribute("username1", _userName);
                         
                         session.setAttribute("password1", _password);
-                        response.sendRedirect("welcome.jsp");
+                        response.sendRedirect("/Login/retrieve");
 
                     } else {
                         out.print("Sorry, username or password error!");
@@ -106,7 +108,9 @@ public class Controller extends HttpServlet {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } 
 
     }
 }
