@@ -19,14 +19,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>Welcome Page</title>
     </head>
-    
+    <div class="container">
          <form class="form" role="form" action="logout"  method="POST">
              
              <h1 class="text-success" align="right">Hello!  <%= session.getAttribute("username1")  %> Successful Login!</h1>
-             <button colspan="2" align="right" type="submit" align="right" >Logout</button>
+             <button colspan="2" align="right" type="submit" align="right" >Logout</button>    
+        </form>
              
-            </form>
-             <button colspan="2" align="right" type="submit" align="right" ><a href="update.jsp"> Edit </a> </button>
+             <button colspan="2" align="right" type="submit" align="right"  class="float-right"><a href="update.jsp"> Edit </a> </button>
       <%
 	    if(session.getAttribute("username1")== null){
                   
@@ -38,6 +38,8 @@
         <h2 class="text-success"><td>Username: </td>
         <%= session.getAttribute("username1")  %>
         </h2 > 
+       <br/>
+       <a href="PdfDownload">Download PDF</a>
        
        
         
@@ -47,7 +49,8 @@
     <th>User id</th>
     <th>User Name</th>
     <th>Email</th>
-    
+    <th>Edit</th>
+    <th>Delete</th>
   </tr>
   
      <c:forEach var="user" items="${AllUsers}">
@@ -55,11 +58,15 @@
                     <td><c:out value="${user.id}" /></td>
                     <td><c:out value="${user.userName}" /></td>
                     <td><c:out value="${user.email}" /></td>
-                    
+                    <td>
+                        <a href="update?id=<c:out value='${user.id}' />">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp; </td><td>
+                        <a href="delete?id=<c:out value='${user.id}' />"class="p-3 mb-2 bg-danger text-white"><button type="button"  >Delete</button></a>                     
+                    </td>
                     
                 </tr>
     </c:forEach>
-          <nav aria-label="Navigation for countries">
+          <nav aria-label="Navigation for countries" class="row justify-content-center">
                 <ul class="pagination">
                     
                     <!-- previous tab -->
@@ -96,3 +103,4 @@
                 </ul>
             </nav>      
 </table>
+       </div>

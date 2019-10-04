@@ -6,12 +6,10 @@
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/web/welcome.jsp</file>
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/service/UserDao.java</file>
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/retrieve.java</file>
-            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/service/User.java</file>
+            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/web/update.jsp</file>
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/update.java</file>
             <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/welcome.java</file>
-            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/DBconnection.java</file>
-            <file>file:/C:/Users/isuru_s/Desktop/NetBeansProjects/Login/src/java/com/servlet/Controller.java</file>
         </group>
     </open-files>
 </project-private>

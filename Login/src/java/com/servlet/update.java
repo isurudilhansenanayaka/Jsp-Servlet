@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -122,6 +123,8 @@ public class update extends HttpServlet {
 //} catch (Exception e) {
 //e.printStackTrace();
 //}
+ RequestDispatcher dispatcher = request.getRequestDispatcher("welcome.jsp");
+  dispatcher.forward(request, response);
     }
 
     

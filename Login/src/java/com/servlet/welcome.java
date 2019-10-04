@@ -23,7 +23,7 @@ import service.User;
  */
 public class welcome {
     static Connection conn=null;
-    public static List<User> listAllUsers() throws SQLException {
+    public static  List<User> listAllUsers() throws SQLException {
         List<User> AllUsers = new ArrayList<>();
          
         String sql = "SELECT * FROM user";
@@ -123,7 +123,52 @@ public class welcome {
        }
        return users;
     }
-    
+    public List<User> getPdfdata(){
+       
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        List <User> users = new LinkedList<>();
+        String query = "SELECT * FROM user";
+       
+        try{
+           conn = DBconnection.getConnection();
+           ps = conn.prepareStatement(query);  
+           rs = ps.executeQuery();
+           
+           while(rs.next()){
+               int id = rs.getInt("id");
+                String userName = rs.getString("userName");
+                String email = rs.getString("email"); 
+               User u1 = new User(id,userName,email);
+               users.add(u1); 
+           } 
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+           if(conn != null){
+               try{
+                   conn.close();
+               }catch(Exception e){
+                   System.out.println(e);
+               }
+           }
+           if(rs != null){
+               try{
+                   rs.close();
+               }catch(Exception e){
+                   System.out.println(e);
+               }
+           }
+           if(ps != null){
+               try{
+                   ps.close();
+               }catch(Exception e){
+                   System.out.println(e);
+               }
+           }           
+        }
+        return users;
+    }
 //    public User getUser(int id) throws SQLException {
 //        User user = null;
 //        String sql = "SELECT * FROM user WHERE id = ?";

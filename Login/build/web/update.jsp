@@ -13,24 +13,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<%
-    String sid=request.getParameter("id");  
-        int id=Integer.parseInt(sid);  
-   User e=UserDao.getEmployeeById(id);
-    Connection conn = null;
-    Statement st = null;
-    ResultSet rs = null;
-    conn=(Connection) DBconnection.getConnection();
-    String userName = request.getParameter("userName");
-//    String id = request.getParameter("id");
-    try{
-    st=(Statement) conn.createStatement();
-    String sql ="SELECT * FROM user WHERE userName=userName";   
-    rs = st.executeQuery(sql);
-        
-while(rs.next()){
-    
-%>
+
 
 <html>
     <head>
@@ -58,7 +41,7 @@ while(rs.next()){
                     <label for="firstName" class="col-sm-3 control-label">User Name</label>
                     <div class="col-sm-9">
                         <input type="text" id="id" placeholder="User Name" class="form-control" 
-                               autofocus name= "userName" required="" value="<%= rs.getString("userName")  %>">
+                               autofocus name= "userName" required="" value="">
                     </div>
                 </div>
                 
@@ -66,7 +49,7 @@ while(rs.next()){
                     <label for="email" class="col-sm-3 control-label">Email* </label>
                     <div class="col-sm-9">
                         <input type="email" id="email" placeholder="Email" class="form-control" name= "email" required="" 
-                               value="<%= rs.getString("email")  %>">
+                               value="">
                     </div>
                 </div>
                 
@@ -88,13 +71,6 @@ while(rs.next()){
    
   </div>
         </div>
-    <%
-
-conn.close();
-}
-} catch (Exception ex) {
-ex.printStackTrace();
-}
-%>
+    
 </body>
 </html>

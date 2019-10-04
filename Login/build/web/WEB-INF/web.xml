@@ -20,6 +20,10 @@
         <servlet-name>signup</servlet-name>
         <servlet-class>com.servlet.signup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PdfDownload</servlet-name>
+        <servlet-class>com.servlet.PdfDownload</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>signup</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PdfDownload</servlet-name>
+        <url-pattern>/PdfDownload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

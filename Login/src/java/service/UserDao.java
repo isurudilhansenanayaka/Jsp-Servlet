@@ -9,6 +9,7 @@ import com.servlet.DBconnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -36,26 +37,41 @@ public class UserDao {
         return status;  
     }  
      
-//     public static User getEmployeeById(int id){  
-//        User e=new User();  
-//          
-//        try{  
-//            Connection conn=DBconnection.getConnection();  
-//            PreparedStatement ps=conn.prepareStatement("select * from user where id=?");  
-//            ps.setInt(1,id);  
-//            ResultSet rs=ps.executeQuery();  
-//            if(rs.next()){  
-//                e.setId(rs.getInt(1));  
-//                e.setUserName(rs.getString(2));  
-//                e.setEmail(rs.getString(3)); 
-//                e.setPassword(rs.getString(4));  
-//                 
-//                  
-//            }  
-//            conn.close();  
-//        }catch(Exception ex){ex.printStackTrace();}  
-//          
-//        return e;  
-//    }
+     public static User getEmployeeById(int id){  
+        User e=new User();  
+          
+        try{  
+            Connection conn=DBconnection.getConnection();  
+            PreparedStatement ps=conn.prepareStatement("select * from user where id=?");  
+            ps.setInt(1,id);  
+            ResultSet rs=ps.executeQuery();  
+            if(rs.next()){  
+                e.setId(rs.getInt(1));  
+                e.setUserName(rs.getString(2));  
+                e.setEmail(rs.getString(3)); 
+                e.setPassword(rs.getString(4));  
+                 
+                  
+            }  
+            conn.close();  
+        }catch(Exception ex){ex.printStackTrace();}  
+          
+        return e;  
+    }
+     public boolean updateUser(User user) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE book SET userName = ?, email = ?";
+        sql += " WHERE id = ?";
+         Connection conn = DBconnection.getConnection();
+         
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, user.getUserName());
+        statement.setString(2, user.getEmail());
+        
+         
+        boolean rowUpdated = statement.executeUpdate() > 0;
+        statement.close();
+        
+        return rowUpdated;     
+    }
      
 }
